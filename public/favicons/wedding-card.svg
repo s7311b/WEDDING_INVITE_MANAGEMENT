@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" fill="#FFF8DC"/>
+  <!-- Card -->
+  <rect x="10" y="15" width="44" height="34" fill="#FFFFFF" stroke="#D4AF37" stroke-width="2" rx="2"/>
+  <!-- Decorative border -->
+  <rect x="14" y="19" width="36" height="26" fill="none" stroke="#FFB6C1" stroke-width="1" stroke-dasharray="2,2"/>
+  <!-- Text lines -->
+  <line x1="20" y1="26" x2="44" y2="26" stroke="#8B4513" stroke-width="2"/>
+  <line x1="20" y1="32" x2="44" y2="32" stroke="#8B4513" stroke-width="2"/>
+  <line x1="24" y1="38" x2="40" y2="38" stroke="#8B4513" stroke-width="1.5"/>
+  <!-- Heart decoration -->
+  <path d="M32 20 L30 18 Q28 16 28 15 Q28 14 29 14 Q30 14 32 16 Q34 14 35 14 Q36 14 36 15 Q36 16 34 18 Z" fill="#FF69B4"/>
+</svg>

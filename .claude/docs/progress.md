@@ -155,13 +155,137 @@
 - **Store**: 4개
 - **API 엔드포인트**: 18개
 
+## [2026-02-10 14:30] 기능 개선 및 UX 향상 구현 완료
+
+### 변경된 파일
+
+#### 신규 파일 (13개)
+- `public/favicons/bride-groom.svg`: 신랑신부 아이콘
+- `public/favicons/wedding-card.svg`: 웨딩카드 아이콘
+- `public/favicons/bouquet.svg`: 부케 아이콘
+- `public/images/placeholder-image.svg`: 이미지 플레이스홀더
+- `public/images/error-image.svg`: 이미지 로딩 에러 표시
+- `src/stores/configStore.js`: 설정 관리 store (favicon, 데이터소스)
+- `src/utils/collisionDetection.js`: 컴포넌트 충돌 감지 및 자동 배치
+- `src/config/fonts.js`: 15개 Google Fonts 설정
+- `src/composables/useFontLoader.js`: 폰트 동적 로딩
+- `src/composables/useFontPriority.js`: 폰트 우선순위 계산
+- `src/components/common/FontSelector.vue`: 폰트 선택 컴포넌트
+- `src/components/admin/FaviconSettings.vue`: Favicon 설정 UI
+- `src/components/admin/DataSourceSettings.vue`: 데이터소스 전환 UI
+
+#### 수정 파일 (19개)
+- `src/config/index.js`: Favicon 설정 및 업데이트 함수 추가
+- `src/main.js`: Favicon 초기화
+- `src/services/dataService.js`: Proxy 패턴으로 동적 서비스 선택
+- `src/components/layout/AdminLayout.vue`: 모바일 반응형 메뉴 (햄버거, sticky)
+- `src/components/admin/TemplateBuilder.vue`: 충돌 감지, 템플릿 불러오기, 폰트 설정, sticky 팔레트
+- `src/components/admin/ComponentPalette.vue`: 템플릿 폰트 선택기
+- `src/components/admin/UserManagement.vue`: 사용자 ID 직접 입력, 폰트 설정
+- `src/components/invite/InviteText.vue`: 폰트 우선순위 적용
+- `src/components/invite/InviteGallery.vue`: 이미지 로딩/에러 처리
+- `src/components/invite/InviteHyperlink.vue`: 폰트 적용
+- `src/components/invite/InviteMap.vue`: 폰트 적용
+- `src/views/admin/AdminDashboard.vue`: 설정 UI 추가
+- `src/views/invite/InviteView.vue`: 폰트 provide 및 사전 로드
+- `src/mock/users.json`: fontFamily 필드 추가
+- `src/mock/templates.json`: fontFamily 필드 추가 (10개 템플릿)
+- `server/database.js`: 폰트 컬럼 추가 및 마이그레이션
+- `server/index.js`: 사용자 ID 직접 입력, 폰트 필드 처리
+- `src/services/mockService.js`: 사용자 ID 직접 입력, ID 변경 방지
+
+### 작업 요약
+
+#### Phase 1: Favicon 시스템
+- 3가지 웨딩 테마 SVG 아이콘 제작
+- 동적 favicon 전환 기능
+- 관리자 대시보드에서 설정 UI 제공
+
+#### Phase 2: 모바일 대응
+- AdminLayout 햄버거 메뉴 추가 (1024px 미만)
+- 사이드바 토글 및 오버레이
+- 메뉴 클릭 시 자동 닫기
+
+#### Phase 3: 드래그앤드롭 고급 기능
+- 컴포넌트 충돌 감지 유틸리티 구현
+- 빈 공간 자동 찾기 (50px 그리드 스캔)
+- 나선형 검색으로 가장 가까운 빈 공간 배치
+- 템플릿 선택 드롭다운 추가
+- 캔버스 높이 제한 제거 (자동 확장)
+- 좌우 팔레트 sticky 적용
+
+#### Phase 4: 폰트 시스템
+- 15개 Google Fonts 제공 (한글 10개, 영문 5개)
+- 3단계 폰트 우선순위 (컴포넌트 > 템플릿 > 사용자 > 기본)
+- 동적 폰트 로딩 및 캐싱
+- FontSelector 컴포넌트 구현
+- 모든 텍스트 컴포넌트에 폰트 적용
+- 데이터베이스 스키마 확장
+
+#### Phase 5: 갤러리 개선
+- 이미지 로딩 스켈레톤 UI
+- 플레이스홀더 이미지 (URL 없을 때)
+- 에러 이미지 (로딩 실패 시)
+- 이미지 상태별 조건부 렌더링
+
+#### Phase 6: UX 개선 (추가 요구사항)
+- 컴포넌트 충돌 감지 에러 수정 및 방어 코드 추가
+- 캔버스 높이 제한 제거로 무한 스크롤 지원
+- 컴포넌트 팔레트 sticky로 스크롤 시에도 접근 가능
+- 사용자 ID 자동 생성 → 직접 입력으로 변경 (필수값, 중복 체크)
+
+### 주요 성과
+
+#### 1. 브랜딩 및 커스터마이징
+- 웨딩 테마 favicon 3종으로 브랜드 정체성 강화
+- 15개 폰트로 다양한 디자인 표현 가능
+- 3단계 폰트 우선순위로 유연한 커스터마이징
+
+#### 2. 향상된 UX
+- 모바일 반응형 메뉴로 접근성 향상
+- 충돌 방지로 직관적인 컴포넌트 배치
+- Sticky 팔레트로 효율적인 작업 환경
+- 갤러리 로딩 상태 표시로 사용자 경험 개선
+
+#### 3. 안정성 및 유지보수성
+- 충돌 감지 방어 코드로 에러 방지
+- 사용자 ID 직접 입력으로 관리 편의성 증대
+- 캔버스 자동 확장으로 제약 없는 편집
+
+### 기술 하이라이트
+
+#### 폰트 시스템 아키텍처
+```javascript
+// 우선순위: 컴포넌트 > 템플릿 > 사용자 > 기본
+useFontPriority(componentFontId)
+  → inject(templateFontId, userFontId)
+  → useFontLoader() // 동적 로딩 및 캐싱
+```
+
+#### 충돌 감지 알고리즘
+- `isOverlapping()`: 사각형 겹침 검사
+- `findEmptySpace()`: 50px 그리드 스캔
+- `findNearestEmptySpace()`: 나선형 검색 (최대 300px 반경)
+- `resolveCollision()`: 자동 재배치
+
+#### 데이터 소스 전환
+- Proxy 패턴으로 런타임 서비스 선택
+- localStorage 기반 설정 영구 저장
+
+### 통계
+- **신규 파일**: 13개
+- **수정 파일**: 19개
+- **신규 코드**: 약 2,000 라인
+- **총 프로젝트 코드**: 약 10,000 라인
+
 ## 다음 스텝
 
 ### 단기 (1주)
 - [ ] 이미지 파일 업로드 기능
 - [ ] 데이터 백업/복원 UI
-- [ ] 에러 처리 개선 (Toast 알림)
-- [ ] 로딩 상태 개선
+- [ ] Toast 알림 시스템 추가
+- [ ] 컴포넌트 복사/붙여넣기 기능
+- [ ] Undo/Redo 기능
 
 ### 중기 (1개월)
 - [ ] PostgreSQL/MySQL 지원
@@ -180,7 +304,7 @@
 
 ## 완료된 작업
 
-### 2026-02-10
+### 2026-02-10 오전 (초기 구현)
 - [x] Vue 3 + Vite 프로젝트 초기 설정
 - [x] 라우팅 및 인증 시스템
 - [x] Mock 데이터 레이어
@@ -195,3 +319,19 @@
 - [x] 템플릿 불러오기 기능
 - [x] GitHub 레포지토리 생성 및 업로드
 - [x] 완전한 문서화 (4개 가이드 문서)
+
+### 2026-02-10 오후 (기능 개선)
+- [x] Favicon 시스템 (3종 아이콘)
+- [x] 설정 관리 Store (localStorage 영구 저장)
+- [x] 모바일 반응형 관리자 메뉴
+- [x] Favicon/데이터소스 설정 UI
+- [x] 컴포넌트 충돌 감지 및 자동 배치
+- [x] 템플릿 선택 드롭다운
+- [x] 폰트 시스템 (15개 Google Fonts)
+- [x] 폰트 우선순위 시스템
+- [x] FontSelector 컴포넌트
+- [x] 갤러리 이미지 로딩/에러 처리
+- [x] 충돌 감지 에러 수정 및 방어 코드
+- [x] 캔버스 높이 제한 제거
+- [x] 좌우 팔레트 sticky 적용
+- [x] 사용자 ID 직접 입력 및 중복 체크

@@ -31,7 +31,8 @@ export function initializeDatabase() {
       isActive INTEGER DEFAULT 1,
       templateId TEXT,
       createdAt TEXT NOT NULL,
-      weddingDate TEXT NOT NULL
+      weddingDate TEXT NOT NULL,
+      fontFamily TEXT
     )
   `)
 
@@ -44,7 +45,8 @@ export function initializeDatabase() {
       category TEXT,
       backgroundColor TEXT DEFAULT '#FFFFFF',
       backgroundImage TEXT,
-      components TEXT NOT NULL
+      components TEXT NOT NULL,
+      fontFamily TEXT
     )
   `)
 
@@ -60,6 +62,27 @@ export function initializeDatabase() {
       FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
     )
   `)
+
+  // Migration: Add fontFamily column if it doesn't exist
+  try {
+    db.exec(`ALTER TABLE users ADD COLUMN fontFamily TEXT`)
+    console.log('Added fontFamily column to users table')
+  } catch (error) {
+    // Column already exists or other error
+    if (!error.message.includes('duplicate column')) {
+      console.error('Error adding fontFamily to users:', error.message)
+    }
+  }
+
+  try {
+    db.exec(`ALTER TABLE templates ADD COLUMN fontFamily TEXT`)
+    console.log('Added fontFamily column to templates table')
+  } catch (error) {
+    // Column already exists or other error
+    if (!error.message.includes('duplicate column')) {
+      console.error('Error adding fontFamily to templates:', error.message)
+    }
+  }
 
   console.log('Database initialized successfully')
 }
@@ -84,8 +107,8 @@ export function seedDatabase() {
 
     // Insert users
     const insertUser = db.prepare(`
-      INSERT INTO users (id, name, email, phone, isActive, templateId, createdAt, weddingDate)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO users (id, name, email, phone, isActive, templateId, createdAt, weddingDate, fontFamily)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `)
 
     for (const user of usersData) {
@@ -97,14 +120,15 @@ export function seedDatabase() {
         user.isActive ? 1 : 0,
         user.templateId,
         user.createdAt,
-        user.weddingDate
+        user.weddingDate,
+        user.fontFamily || null
       )
     }
 
     // Insert templates
     const insertTemplate = db.prepare(`
-      INSERT INTO templates (id, name, thumbnail, category, backgroundColor, backgroundImage, components)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO templates (id, name, thumbnail, category, backgroundColor, backgroundImage, components, fontFamily)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `)
 
     for (const template of templatesData) {
@@ -115,7 +139,8 @@ export function seedDatabase() {
         template.category,
         template.backgroundColor || '#FFFFFF',
         template.backgroundImage,
-        JSON.stringify(template.components)
+        JSON.stringify(template.components),
+        template.fontFamily || null
       )
     }
 

@@ -20,6 +20,21 @@
     </div>
 
     <div class="mt-6 pt-6 border-t">
+      <h4 class="font-semibold mb-3 text-gray-800">템플릿 폰트</h4>
+      <div class="mb-4">
+        <FontSelector
+          :model-value="templateFontFamily"
+          @update:model-value="updateTemplateFontFamily"
+          label="기본 폰트"
+          :show-preview="false"
+        />
+        <p class="text-xs text-gray-500 mt-1">
+          템플릿 전체에 적용되는 기본 폰트입니다.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-6 pt-6 border-t">
       <h4 class="font-semibold mb-3 text-gray-800">배경 설정</h4>
 
       <!-- Color Picker -->
@@ -85,6 +100,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import FontSelector from '@/components/common/FontSelector.vue'
 
 const props = defineProps({
   backgroundColor: {
@@ -94,10 +110,14 @@ const props = defineProps({
   backgroundImage: {
     type: String,
     default: null
+  },
+  templateFontFamily: {
+    type: String,
+    default: ''
   }
 })
 
-const emit = defineEmits(['add-component', 'update-background-color', 'update-background-image'])
+const emit = defineEmits(['add-component', 'update-background-color', 'update-background-image', 'update-template-font-family'])
 
 const componentTypes = [
   {
@@ -213,5 +233,9 @@ const updateBackgroundColor = (color) => {
 
 const updateBackgroundImage = (image) => {
   emit('update-background-image', image)
+}
+
+const updateTemplateFontFamily = (fontFamily) => {
+  emit('update-template-font-family', fontFamily)
 }
 </script>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" fill="#FFE4E1"/>
+  <!-- Groom (left) -->
+  <circle cx="22" cy="24" r="8" fill="#8B4513"/>
+  <path d="M22 32 L14 50 L30 50 Z" fill="#1A1A1A"/>
+  <!-- Bride (right) -->
+  <circle cx="42" cy="24" r="8" fill="#F4A460"/>
+  <path d="M42 32 L34 50 L50 50 Z" fill="#FFFFFF" stroke="#FFB6C1" stroke-width="2"/>
+  <!-- Heart -->
+  <path d="M32 42 L28 38 Q26 36 26 34 Q26 32 28 32 Q30 32 32 34 Q34 32 36 32 Q38 32 38 34 Q38 36 36 38 Z" fill="#FF69B4"/>
+</svg>

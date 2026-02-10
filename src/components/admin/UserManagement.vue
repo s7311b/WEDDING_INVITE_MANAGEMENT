@@ -90,6 +90,25 @@
 
         <form @submit.prevent="handleSubmit">
           <div class="space-y-4">
+            <!-- ID Field -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">사용자 ID *</label>
+              <input
+                v-model="formData.id"
+                type="text"
+                class="input-field w-full"
+                :class="{ 'bg-gray-100 cursor-not-allowed': showEditModal }"
+                placeholder="user001"
+                required
+                pattern="[a-zA-Z0-9_-]+"
+                title="영문자, 숫자, 언더스코어(_), 하이픈(-)만 사용 가능합니다"
+                :readonly="showEditModal"
+              />
+              <p class="text-xs text-gray-500 mt-1">
+                {{ showEditModal ? 'ID는 수정할 수 없습니다' : '영문자, 숫자, 언더스코어(_), 하이픈(-)만 사용 가능합니다' }}
+              </p>
+            </div>
+
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">이름 *</label>
               <input
@@ -147,6 +166,17 @@
                 </option>
               </select>
             </div>
+
+            <div>
+              <FontSelector
+                v-model="formData.fontFamily"
+                label="기본 폰트"
+                :show-preview="false"
+              />
+              <p class="text-xs text-gray-500 mt-1">
+                사용자 초대장 전체에 적용되는 기본 폰트입니다.
+              </p>
+            </div>
           </div>
 
           <div class="mt-6 flex justify-end space-x-3">
@@ -175,6 +205,7 @@
 import { ref, reactive, onMounted, watch } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { useTemplateStore } from '@/stores/templateStore'
+import FontSelector from '@/components/common/FontSelector.vue'
 import dayjs from 'dayjs'
 
 const props = defineProps({
@@ -193,11 +224,13 @@ const showEditModal = ref(false)
 const editingUserId = ref(null)
 
 const formData = reactive({
+  id: '',
   name: '',
   email: '',
   phone: '',
   weddingDate: '',
-  templateId: ''
+  templateId: '',
+  fontFamily: ''
 })
 
 const formatDate = (date) => {
@@ -205,11 +238,13 @@ const formatDate = (date) => {
 }
 
 const resetForm = () => {
+  formData.id = ''
   formData.name = ''
   formData.email = ''
   formData.phone = ''
   formData.weddingDate = ''
   formData.templateId = ''
+  formData.fontFamily = ''
 }
 
 const closeModal = () => {
@@ -225,6 +260,13 @@ const handleSubmit = async () => {
       await userStore.updateUser(editingUserId.value, formData)
       alert('사용자가 수정되었습니다.')
     } else {
+      // 생성 모드: ID 중복 체크
+      const existingUser = userStore.users.find(u => u.id === formData.id)
+      if (existingUser) {
+        alert(`이미 존재하는 사용자 ID입니다: ${formData.id}\n다른 ID를 사용해주세요.`)
+        return
+      }
+
       await userStore.createUser(formData)
       alert('사용자가 추가되었습니다.')
     }
@@ -236,11 +278,13 @@ const handleSubmit = async () => {
 
 const handleEdit = (user) => {
   editingUserId.value = user.id
+  formData.id = user.id  // ID도 설정
   formData.name = user.name
   formData.email = user.email
   formData.phone = user.phone
   formData.weddingDate = user.weddingDate
   formData.templateId = user.templateId || ''
+  formData.fontFamily = user.fontFamily || ''
   showEditModal.value = true
 }
 

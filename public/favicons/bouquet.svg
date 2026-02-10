@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" fill="#F0FFF0"/>
+  <!-- Stems -->
+  <path d="M32 55 L32 35" stroke="#228B22" stroke-width="2"/>
+  <path d="M28 50 L28 38" stroke="#228B22" stroke-width="1.5"/>
+  <path d="M36 50 L36 38" stroke="#228B22" stroke-width="1.5"/>
+  <!-- Ribbon -->
+  <path d="M28 48 Q32 45 36 48" stroke="#FF69B4" stroke-width="3" fill="none"/>
+  <circle cx="32" cy="46" r="2" fill="#FF69B4"/>
+  <!-- Flowers -->
+  <circle cx="32" cy="28" r="6" fill="#FFB6C1"/>
+  <circle cx="24" cy="32" r="5" fill="#FFC0CB"/>
+  <circle cx="40" cy="32" r="5" fill="#FFC0CB"/>
+  <circle cx="28" cy="22" r="4.5" fill="#FFD1DC"/>
+  <circle cx="36" cy="22" r="4.5" fill="#FFD1DC"/>
+  <!-- Flower centers -->
+  <circle cx="32" cy="28" r="2" fill="#FFD700"/>
+  <circle cx="24" cy="32" r="1.5" fill="#FFD700"/>
+  <circle cx="40" cy="32" r="1.5" fill="#FFD700"/>
+  <circle cx="28" cy="22" r="1.5" fill="#FFD700"/>
+  <circle cx="36" cy="22" r="1.5" fill="#FFD700"/>
+  <!-- Leaves -->
+  <ellipse cx="26" cy="40" rx="4" ry="6" fill="#90EE90" transform="rotate(-30 26 40)"/>
+  <ellipse cx="38" cy="40" rx="4" ry="6" fill="#90EE90" transform="rotate(30 38 40)"/>
+</svg>

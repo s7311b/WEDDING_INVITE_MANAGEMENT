@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" fill="#E5E7EB"/>
+  <g transform="translate(150, 100)">
+    <!-- Image icon -->
+    <rect x="10" y="25" width="80" height="60" rx="4" fill="#9CA3AF" stroke="#6B7280" stroke-width="2"/>
+    <circle cx="30" cy="45" r="8" fill="#D1D5DB"/>
+    <path d="M20 75 L40 55 L60 65 L90 45" stroke="#D1D5DB" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- Text -->
+  <text x="200" y="180" font-family="Arial, sans-serif" font-size="16" fill="#6B7280" text-anchor="middle">
+    이미지 없음
+  </text>
+</svg>

@@ -45,22 +45,28 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, provide } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useInviteStore } from '@/stores/inviteStore'
 import InviteText from '@/components/invite/InviteText.vue'
 import InviteGallery from '@/components/invite/InviteGallery.vue'
 import InviteHyperlink from '@/components/invite/InviteHyperlink.vue'
 import InviteMap from '@/components/invite/InviteMap.vue'
+import { useFontLoader } from '@/composables/useFontLoader'
 
 const route = useRoute()
 const router = useRouter()
 const inviteStore = useInviteStore()
+const { loadFonts } = useFontLoader()
 
 const loading = ref(true)
 const error = ref(null)
 
 const inviteData = computed(() => inviteStore.inviteData)
+
+// Provide font IDs for font priority system
+provide('templateFontId', computed(() => inviteData.value?.template?.fontFamily || null))
+provide('userFontId', computed(() => inviteData.value?.user?.fontFamily || null))
 
 const sortedComponents = computed(() => {
   if (!inviteData.value || !inviteData.value.components) {
@@ -116,6 +122,28 @@ onMounted(async () => {
     if (!data) {
       router.push({ name: 'not-found' })
       return
+    }
+
+    // Pre-load fonts
+    const fontsToLoad = []
+    if (data.user?.fontFamily) {
+      fontsToLoad.push(data.user.fontFamily)
+    }
+    if (data.template?.fontFamily) {
+      fontsToLoad.push(data.template.fontFamily)
+    }
+    // Load component-level fonts
+    if (data.components) {
+      data.components.forEach(comp => {
+        if (comp.data?.fontFamily) {
+          fontsToLoad.push(comp.data.fontFamily)
+        }
+      })
+    }
+
+    // Load all required fonts
+    if (fontsToLoad.length > 0) {
+      await loadFonts(fontsToLoad)
     }
   } catch (err) {
     error.value = err.message

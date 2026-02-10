@@ -3,7 +3,7 @@
     class="invite-map"
     :style="props.style"
   >
-    <div class="mb-4 text-center">
+    <div class="mb-4 text-center" :style="{ fontFamily: fontFamily }">
       <h3 class="text-xl font-bold mb-2">{{ data.placeName }}</h3>
       <p class="text-gray-600">{{ data.address }}</p>
     </div>
@@ -43,6 +43,7 @@
 <script setup>
 import { computed, onMounted, watch } from 'vue'
 import { useKakaoMap } from '@/composables/useKakaoMap'
+import { useFontPriority } from '@/composables/useFontPriority'
 
 const props = defineProps({
   data: {
@@ -54,6 +55,10 @@ const props = defineProps({
     default: () => ({})
   }
 })
+
+// 폰트 우선순위 적용
+const componentFontId = computed(() => props.data.fontFamily || null)
+const { fontFamily } = useFontPriority(componentFontId)
 
 const mapId = computed(() => `map-${Math.random().toString(36).substr(2, 9)}`)
 const mapHeight = computed(() => props.style.height || '400px')

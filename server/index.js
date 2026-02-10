@@ -44,21 +44,27 @@ app.get('/api/users/:id', (req, res) => {
 // Create user
 app.post('/api/users', (req, res) => {
   try {
-    const { name, email, phone, weddingDate, templateId } = req.body
+    const { id, name, email, phone, weddingDate, templateId, fontFamily } = req.body
 
-    // Generate new user ID
-    const lastUser = db.prepare('SELECT id FROM users ORDER BY id DESC LIMIT 1').get()
-    const lastNum = lastUser ? parseInt(lastUser.id.replace('user', '')) : 0
-    const newId = `user${String(lastNum + 1).padStart(3, '0')}`
+    // Validate required fields
+    if (!id) {
+      return res.status(400).json({ error: 'User ID is required' })
+    }
+
+    // Check if user ID already exists
+    const existingUser = db.prepare('SELECT id FROM users WHERE id = ?').get(id)
+    if (existingUser) {
+      return res.status(409).json({ error: `User ID already exists: ${id}` })
+    }
 
     const stmt = db.prepare(`
-      INSERT INTO users (id, name, email, phone, isActive, templateId, createdAt, weddingDate)
-      VALUES (?, ?, ?, ?, 1, ?, ?, ?)
+      INSERT INTO users (id, name, email, phone, isActive, templateId, createdAt, weddingDate, fontFamily)
+      VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?)
     `)
 
-    stmt.run(newId, name, email, phone, templateId || null, new Date().toISOString(), weddingDate)
+    stmt.run(id, name, email, phone, templateId || null, new Date().toISOString(), weddingDate, fontFamily || null)
 
-    const newUser = db.prepare('SELECT * FROM users WHERE id = ?').get(newId)
+    const newUser = db.prepare('SELECT * FROM users WHERE id = ?').get(id)
     res.status(201).json({ ...newUser, isActive: newUser.isActive === 1 })
   } catch (error) {
     res.status(500).json({ error: error.message })
@@ -68,15 +74,15 @@ app.post('/api/users', (req, res) => {
 // Update user
 app.put('/api/users/:id', (req, res) => {
   try {
-    const { name, email, phone, weddingDate, templateId, isActive } = req.body
+    const { name, email, phone, weddingDate, templateId, isActive, fontFamily } = req.body
 
     const stmt = db.prepare(`
       UPDATE users
-      SET name = ?, email = ?, phone = ?, weddingDate = ?, templateId = ?, isActive = ?
+      SET name = ?, email = ?, phone = ?, weddingDate = ?, templateId = ?, isActive = ?, fontFamily = ?
       WHERE id = ?
     `)
 
-    stmt.run(name, email, phone, weddingDate, templateId || null, isActive ? 1 : 0, req.params.id)
+    stmt.run(name, email, phone, weddingDate, templateId || null, isActive ? 1 : 0, fontFamily || null, req.params.id)
 
     const user = db.prepare('SELECT * FROM users WHERE id = ?').get(req.params.id)
     res.json({ ...user, isActive: user.isActive === 1 })
@@ -147,7 +153,7 @@ app.get('/api/templates/:id', (req, res) => {
 // Create template
 app.post('/api/templates', (req, res) => {
   try {
-    const { name, thumbnail, category, backgroundColor, backgroundImage, components } = req.body
+    const { name, thumbnail, category, backgroundColor, backgroundImage, components, fontFamily } = req.body
 
     // Generate new template ID
     const lastTemplate = db.prepare('SELECT id FROM templates ORDER BY id DESC LIMIT 1').get()
@@ -155,8 +161,8 @@ app.post('/api/templates', (req, res) => {
     const newId = `template-${lastNum + 1}`
 
     const stmt = db.prepare(`
-      INSERT INTO templates (id, name, thumbnail, category, backgroundColor, backgroundImage, components)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO templates (id, name, thumbnail, category, backgroundColor, backgroundImage, components, fontFamily)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `)
 
     stmt.run(
@@ -166,7 +172,8 @@ app.post('/api/templates', (req, res) => {
       category || 'custom',
       backgroundColor || '#FFFFFF',
       backgroundImage || null,
-      JSON.stringify(components || [])
+      JSON.stringify(components || []),
+      fontFamily || null
     )
 
     const newTemplate = db.prepare('SELECT * FROM templates WHERE id = ?').get(newId)
@@ -182,11 +189,11 @@ app.post('/api/templates', (req, res) => {
 // Update template
 app.put('/api/templates/:id', (req, res) => {
   try {
-    const { name, thumbnail, category, backgroundColor, backgroundImage, components } = req.body
+    const { name, thumbnail, category, backgroundColor, backgroundImage, components, fontFamily } = req.body
 
     const stmt = db.prepare(`
       UPDATE templates
-      SET name = ?, thumbnail = ?, category = ?, backgroundColor = ?, backgroundImage = ?, components = ?
+      SET name = ?, thumbnail = ?, category = ?, backgroundColor = ?, backgroundImage = ?, components = ?, fontFamily = ?
       WHERE id = ?
     `)
 
@@ -197,6 +204,7 @@ app.put('/api/templates/:id', (req, res) => {
       backgroundColor || '#FFFFFF',
       backgroundImage || null,
       JSON.stringify(components || []),
+      fontFamily || null,
       req.params.id
     )
 

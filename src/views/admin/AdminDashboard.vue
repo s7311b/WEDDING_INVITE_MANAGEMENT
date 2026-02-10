@@ -33,6 +33,12 @@
       </div>
     </div>
 
+    <!-- Settings Section -->
+    <div class="space-y-6 mb-8">
+      <FaviconSettings />
+      <DataSourceSettings />
+    </div>
+
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <!-- Recent Users -->
       <div class="card">
@@ -96,6 +102,8 @@ import { ref, computed, onMounted } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { useTemplateStore } from '@/stores/templateStore'
 import { getDataSourceInfo } from '@/services/dataService'
+import FaviconSettings from '@/components/admin/FaviconSettings.vue'
+import DataSourceSettings from '@/components/admin/DataSourceSettings.vue'
 
 const userStore = useUserStore()
 const templateStore = useTemplateStore()

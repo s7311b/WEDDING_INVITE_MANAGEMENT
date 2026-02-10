@@ -6,6 +6,7 @@
     "category": "classic",
     "backgroundColor": "#F8E8E8",
     "backgroundImage": null,
+    "fontFamily": "noto-serif-kr",
     "components": [
       {
         "id": "comp-1",
@@ -103,6 +104,7 @@
     "category": "modern",
     "backgroundColor": "#FFFFFF",
     "backgroundImage": null,
+    "fontFamily": "nanum-gothic",
     "components": [
       {
         "id": "comp-1",
@@ -155,6 +157,7 @@
     "category": "romantic",
     "backgroundColor": "#FFB6C1",
     "backgroundImage": null,
+    "fontFamily": "cute-font",
     "components": [
       {
         "id": "comp-1",
@@ -187,6 +190,7 @@
     "category": "simple",
     "backgroundColor": "#F5F5F5",
     "backgroundImage": null,
+    "fontFamily": "nanum-myeongjo",
     "components": [
       {
         "id": "comp-1",
@@ -219,6 +223,7 @@
     "category": "elegance",
     "backgroundColor": "#FFF8DC",
     "backgroundImage": null,
+    "fontFamily": "playfair-display",
     "components": [
       {
         "id": "comp-1",
@@ -251,6 +256,7 @@
     "category": "vintage",
     "backgroundColor": "#F4E4C1",
     "backgroundImage": null,
+    "fontFamily": "stylish",
     "components": [
       {
         "id": "comp-1",
@@ -283,6 +289,7 @@
     "category": "natural",
     "backgroundColor": "#E8F5E9",
     "backgroundImage": null,
+    "fontFamily": "do-hyeon",
     "components": [
       {
         "id": "comp-1",
@@ -315,6 +322,7 @@
     "category": "garden",
     "backgroundColor": "#C8E6C9",
     "backgroundImage": null,
+    "fontFamily": "jua",
     "components": [
       {
         "id": "comp-1",
@@ -347,6 +355,7 @@
     "category": "beach",
     "backgroundColor": "#B3E5FC",
     "backgroundImage": null,
+    "fontFamily": "gamja-flower",
     "components": [
       {
         "id": "comp-1",
@@ -379,6 +388,7 @@
     "category": "luxury",
     "backgroundColor": "#1A1A1A",
     "backgroundImage": null,
+    "fontFamily": "cinzel",
     "components": [
       {
         "id": "comp-1",

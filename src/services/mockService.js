@@ -32,8 +32,19 @@ export const mockService = {
   async createUser(userData) {
     await this.delay()
     const users = storageService.get('USERS') || []
+
+    // Check if ID is provided
+    if (!userData.id) {
+      throw new Error('User ID is required')
+    }
+
+    // Check for duplicate ID
+    const existingUser = users.find(user => user.id === userData.id)
+    if (existingUser) {
+      throw new Error(`User ID already exists: ${userData.id}`)
+    }
+
     const newUser = {
-      id: `user${String(users.length + 1).padStart(3, '0')}`,
       ...userData,
       createdAt: new Date().toISOString(),
       isActive: true
@@ -48,7 +59,9 @@ export const mockService = {
     const users = storageService.get('USERS') || []
     const index = users.findIndex(user => user.id === userId)
     if (index !== -1) {
-      users[index] = { ...users[index], ...userData }
+      // ID는 변경 불가 - userData에서 id 제외
+      const { id, ...updateData } = userData
+      users[index] = { ...users[index], ...updateData }
       storageService.set('USERS', users)
       return users[index]
     }

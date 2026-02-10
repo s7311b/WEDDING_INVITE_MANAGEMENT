@@ -1,41 +1,66 @@
 <template>
   <div class="template-builder flex gap-6">
-    <!-- Left: Component Palette -->
+    <!-- Left: Component Palette (Sticky) -->
     <div class="w-80 flex-shrink-0">
-      <ComponentPalette
-        :background-color="template.backgroundColor || '#FFFFFF'"
-        :background-image="template.backgroundImage"
-        @add-component="handleAddComponent"
-        @update-background-color="handleUpdateBackgroundColor"
-        @update-background-image="handleUpdateBackgroundImage"
-      />
+      <div class="sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto">
+        <ComponentPalette
+          :background-color="template.backgroundColor || '#FFFFFF'"
+          :background-image="template.backgroundImage"
+          :template-font-family="template.fontFamily || ''"
+          @add-component="handleAddComponent"
+          @update-background-color="handleUpdateBackgroundColor"
+          @update-background-image="handleUpdateBackgroundImage"
+          @update-template-font-family="handleUpdateTemplateFontFamily"
+        />
+      </div>
     </div>
 
     <!-- Center: Canvas -->
     <div class="flex-1">
       <div class="bg-white rounded-lg shadow p-4 mb-4">
-        <div class="flex justify-between items-center mb-4">
-          <h3 class="text-lg font-bold text-gray-800">캔버스</h3>
-          <div class="flex gap-2">
-            <button
-              @click="togglePreview"
-              class="btn-secondary text-sm"
+        <div class="mb-4">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="text-lg font-bold text-gray-800">캔버스</h3>
+            <div class="flex gap-2">
+              <button
+                @click="togglePreview"
+                class="btn-secondary text-sm"
+              >
+                {{ showPreview ? '편집 모드' : '미리보기' }}
+              </button>
+              <button
+                @click="saveTemplate"
+                class="btn-primary text-sm"
+                :disabled="saving"
+              >
+                {{ saving ? '저장 중...' : '저장' }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Template Selector -->
+          <div class="flex gap-2 items-center">
+            <label class="text-sm font-medium text-gray-700">템플릿 불러오기:</label>
+            <select
+              v-model="selectedTemplateId"
+              @change="loadSelectedTemplate"
+              class="input-field flex-1 text-sm"
             >
-              {{ showPreview ? '편집 모드' : '미리보기' }}
-            </button>
-            <button
-              @click="saveTemplate"
-              class="btn-primary text-sm"
-              :disabled="saving"
-            >
-              {{ saving ? '저장 중...' : '저장' }}
-            </button>
+              <option value="">-- 템플릿 선택 --</option>
+              <option
+                v-for="tmpl in availableTemplates"
+                :key="tmpl.id"
+                :value="tmpl.id"
+              >
+                {{ tmpl.name }}
+              </option>
+            </select>
           </div>
         </div>
 
         <div
           v-if="!showPreview"
-          class="canvas-container relative border-2 border-gray-300 rounded overflow-hidden"
+          class="canvas-container relative border-2 border-gray-300 rounded"
           :style="canvasStyle"
         >
           <Vue3DraggableResizable
@@ -119,9 +144,10 @@
       </div>
     </div>
 
-    <!-- Right: Properties Panel -->
+    <!-- Right: Properties Panel (Sticky) -->
     <div class="w-80 flex-shrink-0">
-      <div class="bg-white rounded-lg shadow p-4">
+      <div class="sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto">
+        <div class="bg-white rounded-lg shadow p-4">
         <h3 class="text-lg font-bold mb-4 text-gray-800">속성</h3>
 
         <div v-if="!selectedComponent" class="text-center py-8 text-gray-500">
@@ -157,6 +183,13 @@
                 v-model="selectedComponent.data.content"
                 class="input-field w-full"
                 rows="4"
+              />
+            </div>
+            <div>
+              <FontSelector
+                v-model="selectedComponent.data.fontFamily"
+                label="폰트"
+                :show-preview="false"
               />
             </div>
             <div>
@@ -231,6 +264,13 @@
               />
             </div>
             <div>
+              <FontSelector
+                v-model="selectedComponent.data.fontFamily"
+                label="폰트"
+                :show-preview="false"
+              />
+            </div>
+            <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">버튼 스타일</label>
               <select v-model="selectedComponent.data.buttonStyle" class="input-field w-full">
                 <option value="primary">Primary</option>
@@ -273,6 +313,13 @@
               />
             </div>
             <div>
+              <FontSelector
+                v-model="selectedComponent.data.fontFamily"
+                label="폰트"
+                :show-preview="false"
+              />
+            </div>
+            <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">위도</label>
               <input
                 v-model.number="selectedComponent.data.latitude"
@@ -306,12 +353,13 @@
           </div>
         </div>
       </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import Vue3DraggableResizable from 'vue3-draggable-resizable'
 import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
 import ComponentPalette from './ComponentPalette.vue'
@@ -319,6 +367,9 @@ import InviteText from '@/components/invite/InviteText.vue'
 import InviteGallery from '@/components/invite/InviteGallery.vue'
 import InviteHyperlink from '@/components/invite/InviteHyperlink.vue'
 import InviteMap from '@/components/invite/InviteMap.vue'
+import FontSelector from '@/components/common/FontSelector.vue'
+import { findEmptySpace, resolveCollision } from '@/utils/collisionDetection'
+import { useTemplateStore } from '@/stores/templateStore'
 
 const props = defineProps({
   initialTemplate: {
@@ -328,6 +379,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['save'])
+
+const templateStore = useTemplateStore()
 
 const template = ref({
   ...props.initialTemplate,
@@ -339,6 +392,8 @@ const template = ref({
 const selectedComponent = ref(null)
 const showPreview = ref(false)
 const saving = ref(false)
+const availableTemplates = ref([])
+const selectedTemplateId = ref('')
 
 const canvasStyle = computed(() => {
   const style = {
@@ -392,6 +447,43 @@ const getAbsoluteStyle = (component) => {
 }
 
 const handleAddComponent = (component) => {
+  // 충돌 감지 및 빈 공간 찾기 (높이 제한 제거)
+  const canvasSize = { width: 800 }
+  const componentWidth = component.position?.width || 600
+  const componentHeight = component.position?.height || 200
+
+  // component.data에 width와 height 설정 (collision detection에서 필요)
+  if (!component.data) {
+    component.data = {}
+  }
+  component.data.width = componentWidth
+  component.data.height = componentHeight
+
+  const emptySpace = findEmptySpace(
+    componentWidth,
+    componentHeight,
+    template.value.components,
+    canvasSize
+  )
+
+  if (emptySpace) {
+    component.position = {
+      x: emptySpace.x,
+      y: emptySpace.y,
+      width: componentWidth,
+      height: componentHeight
+    }
+    console.log(`New component placed at (${emptySpace.x}, ${emptySpace.y})`)
+  } else {
+    console.warn('No empty space found, using default position')
+    component.position = {
+      x: component.position?.x || 50,
+      y: component.position?.y || 50,
+      width: componentWidth,
+      height: componentHeight
+    }
+  }
+
   template.value.components.push(component)
   selectedComponent.value = component
 }
@@ -405,6 +497,10 @@ const handleUpdateBackgroundImage = (image) => {
   template.value.backgroundImage = image
 }
 
+const handleUpdateTemplateFontFamily = (fontFamily) => {
+  template.value.fontFamily = fontFamily
+}
+
 const selectComponent = (component) => {
   selectedComponent.value = component
 }
@@ -412,11 +508,34 @@ const selectComponent = (component) => {
 const updateComponentPosition = (componentId, position) => {
   const component = template.value.components.find(c => c.id === componentId)
   if (component) {
+    // 충돌 감지 및 자동 해결 (높이 제한 제거)
+    const canvasSize = { width: 800 }
+
+    // component.data가 없으면 초기화
+    if (!component.data) {
+      component.data = {}
+    }
+
+    component.data.width = position.width
+    component.data.height = position.height
+
+    const adjustedPosition = resolveCollision(
+      component,
+      { x: position.x, y: position.y },
+      template.value.components,
+      canvasSize
+    )
+
     component.position = {
-      x: position.x,
-      y: position.y,
+      x: adjustedPosition.x,
+      y: adjustedPosition.y,
       width: position.width,
       height: position.height
+    }
+
+    if (adjustedPosition.adjusted) {
+      // 위치가 조정된 경우 사용자에게 알림
+      console.log(`Position adjusted due to collision`)
     }
   }
 }
@@ -462,6 +581,45 @@ const saveTemplate = async () => {
   }
 }
 
+const loadSelectedTemplate = async () => {
+  if (!selectedTemplateId.value) {
+    return
+  }
+
+  // 작업 중 경고
+  if (template.value.components.length > 0 || template.value.backgroundColor !== '#FFFFFF') {
+    const confirmed = confirm(
+      '현재 작업 중인 내용이 있습니다.\n템플릿을 불러오면 현재 내용이 덮어써집니다.\n계속하시겠습니까?'
+    )
+    if (!confirmed) {
+      selectedTemplateId.value = ''
+      return
+    }
+  }
+
+  try {
+    const selectedTemplate = availableTemplates.value.find(
+      tmpl => tmpl.id === selectedTemplateId.value
+    )
+
+    if (selectedTemplate) {
+      // Deep copy하여 적용
+      template.value = {
+        ...selectedTemplate,
+        backgroundColor: selectedTemplate.backgroundColor || '#FFFFFF',
+        backgroundImage: selectedTemplate.backgroundImage || null,
+        components: JSON.parse(JSON.stringify(selectedTemplate.components || []))
+      }
+
+      selectedComponent.value = null
+      console.log(`Template loaded: ${selectedTemplate.name}`)
+    }
+  } catch (error) {
+    console.error('Failed to load template:', error)
+    alert('템플릿을 불러오는 중 오류가 발생했습니다.')
+  }
+}
+
 // Watch for prop changes
 watch(() => props.initialTemplate, (newVal) => {
   template.value = {
@@ -471,6 +629,16 @@ watch(() => props.initialTemplate, (newVal) => {
     components: [...(newVal.components || [])]
   }
 }, { deep: true })
+
+// Fetch templates on mount
+onMounted(async () => {
+  try {
+    await templateStore.fetchTemplates()
+    availableTemplates.value = templateStore.templates
+  } catch (error) {
+    console.error('Failed to fetch templates:', error)
+  }
+})
 </script>
 
 <style scoped>

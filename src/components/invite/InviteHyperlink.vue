@@ -9,6 +9,7 @@
       rel="noopener noreferrer"
       class="inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105"
       :class="buttonClass"
+      :style="{ fontFamily: fontFamily }"
     >
       <span v-if="data.icon" class="mr-2">
         {{ getIcon(data.icon) }}
@@ -20,6 +21,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useFontPriority } from '@/composables/useFontPriority'
 
 const props = defineProps({
   data: {
@@ -31,6 +33,10 @@ const props = defineProps({
     default: () => ({})
   }
 })
+
+// 폰트 우선순위 적용
+const componentFontId = computed(() => props.data.fontFamily || null)
+const { fontFamily } = useFontPriority(componentFontId)
 
 const componentStyle = computed(() => ({
   ...props.style,
