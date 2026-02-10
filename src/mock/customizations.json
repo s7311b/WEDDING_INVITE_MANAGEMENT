@@ -1,0 +1,149 @@
+{
+  "user001": {
+    "userId": "user001",
+    "templateId": "template-1",
+    "lastModified": "2026-02-10T14:30:00Z",
+    "backgroundColor": "#F8E8E8",
+    "backgroundImage": null,
+    "components": [
+      {
+        "id": "comp-1",
+        "type": "text",
+        "order": 1,
+        "data": {
+          "title": "김철수 ❤️ 박민지",
+          "content": "2026년 6월 14일 토요일 오후 2시\n저희 두 사람이 사랑과 믿음으로 한 가정을 이루게 되었습니다.\n소중한 분들을 모시고 저희의 앞날을 축복해 주시면 감사하겠습니다.",
+          "fontSize": "24px",
+          "textAlign": "center",
+          "color": "#333333"
+        },
+        "style": {
+          "padding": "40px 20px",
+          "backgroundColor": "transparent"
+        },
+        "position": {
+          "x": 100,
+          "y": 50,
+          "width": 600,
+          "height": 220
+        }
+      },
+      {
+        "id": "comp-2",
+        "type": "gallery",
+        "order": 2,
+        "data": {
+          "layout": "2x2",
+          "images": [
+            { "url": "https://via.placeholder.com/400x400/D4A5A5/FFFFFF?text=Photo+1", "alt": "사진1" },
+            { "url": "https://via.placeholder.com/400x400/E8D5D5/FFFFFF?text=Photo+2", "alt": "사진2" },
+            { "url": "https://via.placeholder.com/400x400/F8E8E8/333333?text=Photo+3", "alt": "사진3" },
+            { "url": "https://via.placeholder.com/400x400/FFB6C1/FFFFFF?text=Photo+4", "alt": "사진4" }
+          ]
+        },
+        "style": {
+          "padding": "20px"
+        },
+        "position": {
+          "x": 100,
+          "y": 300,
+          "width": 600,
+          "height": 400
+        }
+      },
+      {
+        "id": "comp-3",
+        "type": "map",
+        "order": 3,
+        "data": {
+          "address": "서울특별시 강남구 테헤란로 123",
+          "placeName": "강남 웨딩홀",
+          "latitude": 37.5012743,
+          "longitude": 127.0396597
+        },
+        "style": {
+          "padding": "20px",
+          "height": "400px"
+        },
+        "position": {
+          "x": 100,
+          "y": 730,
+          "width": 600,
+          "height": 450
+        }
+      },
+      {
+        "id": "comp-4",
+        "type": "hyperlink",
+        "order": 4,
+        "data": {
+          "text": "축하 메시지 남기기",
+          "url": "https://example.com/guestbook",
+          "buttonStyle": "primary",
+          "icon": "message"
+        },
+        "style": {
+          "padding": "20px",
+          "textAlign": "center"
+        },
+        "position": {
+          "x": 250,
+          "y": 1210,
+          "width": 300,
+          "height": 100
+        }
+      }
+    ]
+  },
+  "user002": {
+    "userId": "user002",
+    "templateId": "template-2",
+    "lastModified": "2026-02-10T15:00:00Z",
+    "backgroundColor": "#FFFFFF",
+    "backgroundImage": null,
+    "components": [
+      {
+        "id": "comp-1",
+        "type": "text",
+        "order": 1,
+        "data": {
+          "title": "이영희 & 최준호",
+          "content": "2026년 7월 20일 일요일 오후 3시\n우리, 결혼합니다",
+          "fontSize": "32px",
+          "textAlign": "center",
+          "color": "#000000"
+        },
+        "style": {
+          "padding": "60px 20px",
+          "backgroundColor": "transparent"
+        },
+        "position": {
+          "x": 100,
+          "y": 100,
+          "width": 600,
+          "height": 250
+        }
+      },
+      {
+        "id": "comp-2",
+        "type": "gallery",
+        "order": 2,
+        "data": {
+          "layout": "1x1",
+          "images": [
+            { "url": "https://via.placeholder.com/800x600/000000/FFFFFF?text=Main+Photo", "alt": "메인사진" }
+          ]
+        },
+        "style": {
+          "padding": "0"
+        },
+        "position": {
+          "x": 100,
+          "y": 380,
+          "width": 600,
+          "height": 450
+        }
+      }
+    ]
+  }
+}

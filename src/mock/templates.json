@@ -1,0 +1,407 @@
+[
+  {
+    "id": "template-1",
+    "name": "클래식 웨딩",
+    "thumbnail": "/images/templates/classic.jpg",
+    "category": "classic",
+    "backgroundColor": "#F8E8E8",
+    "backgroundImage": null,
+    "components": [
+      {
+        "id": "comp-1",
+        "type": "text",
+        "order": 1,
+        "data": {
+          "title": "We're Getting Married",
+          "content": "저희 두 사람이 사랑과 믿음으로 한 가정을 이루게 되었습니다.\n소중한 분들을 모시고 저희의 앞날을 축복해 주시면 감사하겠습니다.",
+          "fontSize": "24px",
+          "textAlign": "center",
+          "color": "#333333"
+        },
+        "style": {
+          "padding": "40px 20px",
+          "backgroundColor": "transparent"
+        },
+        "position": {
+          "x": 100,
+          "y": 50,
+          "width": 600,
+          "height": 200
+        }
+      },
+      {
+        "id": "comp-2",
+        "type": "gallery",
+        "order": 2,
+        "data": {
+          "layout": "2x2",
+          "images": [
+            { "url": "https://via.placeholder.com/400x400/D4A5A5/FFFFFF?text=Photo+1", "alt": "사진1" },
+            { "url": "https://via.placeholder.com/400x400/E8D5D5/FFFFFF?text=Photo+2", "alt": "사진2" },
+            { "url": "https://via.placeholder.com/400x400/F8E8E8/333333?text=Photo+3", "alt": "사진3" },
+            { "url": "https://via.placeholder.com/400x400/FFB6C1/FFFFFF?text=Photo+4", "alt": "사진4" }
+          ]
+        },
+        "style": {
+          "padding": "20px"
+        },
+        "position": {
+          "x": 100,
+          "y": 280,
+          "width": 600,
+          "height": 400
+        }
+      },
+      {
+        "id": "comp-3",
+        "type": "map",
+        "order": 3,
+        "data": {
+          "address": "서울특별시 강남구 테헤란로 123",
+          "placeName": "강남 웨딩홀",
+          "latitude": 37.5012743,
+          "longitude": 127.0396597
+        },
+        "style": {
+          "padding": "20px",
+          "height": "400px"
+        },
+        "position": {
+          "x": 100,
+          "y": 710,
+          "width": 600,
+          "height": 450
+        }
+      },
+      {
+        "id": "comp-4",
+        "type": "hyperlink",
+        "order": 4,
+        "data": {
+          "text": "축하 메시지 남기기",
+          "url": "https://example.com/guestbook",
+          "buttonStyle": "primary",
+          "icon": "message"
+        },
+        "style": {
+          "padding": "20px",
+          "textAlign": "center"
+        },
+        "position": {
+          "x": 250,
+          "y": 1190,
+          "width": 300,
+          "height": 100
+        }
+      }
+    ]
+  },
+  {
+    "id": "template-2",
+    "name": "모던 웨딩",
+    "thumbnail": "/images/templates/modern.jpg",
+    "category": "modern",
+    "backgroundColor": "#FFFFFF",
+    "backgroundImage": null,
+    "components": [
+      {
+        "id": "comp-1",
+        "type": "text",
+        "order": 1,
+        "data": {
+          "title": "WEDDING INVITATION",
+          "content": "우리, 결혼합니다",
+          "fontSize": "32px",
+          "textAlign": "center",
+          "color": "#000000"
+        },
+        "style": {
+          "padding": "60px 20px",
+          "backgroundColor": "transparent"
+        },
+        "position": {
+          "x": 100,
+          "y": 100,
+          "width": 600,
+          "height": 250
+        }
+      },
+      {
+        "id": "comp-2",
+        "type": "gallery",
+        "order": 2,
+        "data": {
+          "layout": "1x1",
+          "images": [
+            { "url": "https://via.placeholder.com/800x600/000000/FFFFFF?text=Main+Photo", "alt": "메인사진" }
+          ]
+        },
+        "style": {
+          "padding": "0"
+        },
+        "position": {
+          "x": 100,
+          "y": 380,
+          "width": 600,
+          "height": 450
+        }
+      }
+    ]
+  },
+  {
+    "id": "template-3",
+    "name": "로맨틱 웨딩",
+    "thumbnail": "/images/templates/romantic.jpg",
+    "category": "romantic",
+    "backgroundColor": "#FFB6C1",
+    "backgroundImage": null,
+    "components": [
+      {
+        "id": "comp-1",
+        "type": "text",
+        "order": 1,
+        "data": {
+          "title": "💕 Our Love Story 💕",
+          "content": "사랑하는 두 사람의 특별한 날에 초대합니다",
+          "fontSize": "28px",
+          "textAlign": "center",
+          "color": "#D4AF37"
+        },
+        "style": {
+          "padding": "50px 20px",
+          "backgroundColor": "rgba(255, 255, 255, 0.3)"
+        },
+        "position": {
+          "x": 100,
+          "y": 150,
+          "width": 600,
+          "height": 220
+        }
+      }
+    ]
+  },
+  {
+    "id": "template-4",
+    "name": "심플 웨딩",
+    "thumbnail": "/images/templates/simple.jpg",
+    "category": "simple",
+    "backgroundColor": "#F5F5F5",
+    "backgroundImage": null,
+    "components": [
+      {
+        "id": "comp-1",
+        "type": "text",
+        "order": 1,
+        "data": {
+          "title": "Wedding Day",
+          "content": "함께해주세요",
+          "fontSize": "24px",
+          "textAlign": "center",
+          "color": "#555555"
+        },
+        "style": {
+          "padding": "40px 20px",
+          "backgroundColor": "transparent"
+        },
+        "position": {
+          "x": 150,
+          "y": 200,
+          "width": 500,
+          "height": 180
+        }
+      }
+    ]
+  },
+  {
+    "id": "template-5",
+    "name": "엘레강스 웨딩",
+    "thumbnail": "/images/templates/elegance.jpg",
+    "category": "elegance",
+    "backgroundColor": "#FFF8DC",
+    "backgroundImage": null,
+    "components": [
+      {
+        "id": "comp-1",
+        "type": "text",
+        "order": 1,
+        "data": {
+          "title": "Elegant Wedding",
+          "content": "품격있는 우리의 시작",
+          "fontSize": "30px",
+          "textAlign": "center",
+          "color": "#8B4513"
+        },
+        "style": {
+          "padding": "60px 30px",
+          "backgroundColor": "rgba(255, 255, 255, 0.5)"
+        },
+        "position": {
+          "x": 100,
+          "y": 180,
+          "width": 600,
+          "height": 240
+        }
+      }
+    ]
+  },
+  {
+    "id": "template-6",
+    "name": "빈티지 웨딩",
+    "thumbnail": "/images/templates/vintage.jpg",
+    "category": "vintage",
+    "backgroundColor": "#F4E4C1",
+    "backgroundImage": null,
+    "components": [
+      {
+        "id": "comp-1",
+        "type": "text",
+        "order": 1,
+        "data": {
+          "title": "Vintage Wedding",
+          "content": "고즈넉한 우리의 약속",
+          "fontSize": "26px",
+          "textAlign": "center",
+          "color": "#6B4423"
+        },
+        "style": {
+          "padding": "50px 25px",
+          "backgroundColor": "transparent"
+        },
+        "position": {
+          "x": 120,
+          "y": 220,
+          "width": 560,
+          "height": 200
+        }
+      }
+    ]
+  },
+  {
+    "id": "template-7",
+    "name": "내추럴 웨딩",
+    "thumbnail": "/images/templates/natural.jpg",
+    "category": "natural",
+    "backgroundColor": "#E8F5E9",
+    "backgroundImage": null,
+    "components": [
+      {
+        "id": "comp-1",
+        "type": "text",
+        "order": 1,
+        "data": {
+          "title": "Natural Wedding",
+          "content": "자연 속에서 맺는 인연",
+          "fontSize": "28px",
+          "textAlign": "center",
+          "color": "#2D5016"
+        },
+        "style": {
+          "padding": "45px 20px",
+          "backgroundColor": "rgba(255, 255, 255, 0.7)"
+        },
+        "position": {
+          "x": 100,
+          "y": 200,
+          "width": 600,
+          "height": 210
+        }
+      }
+    ]
+  },
+  {
+    "id": "template-8",
+    "name": "가든 웨딩",
+    "thumbnail": "/images/templates/garden.jpg",
+    "category": "garden",
+    "backgroundColor": "#C8E6C9",
+    "backgroundImage": null,
+    "components": [
+      {
+        "id": "comp-1",
+        "type": "text",
+        "order": 1,
+        "data": {
+          "title": "Garden Wedding",
+          "content": "정원에서 시작되는 사랑",
+          "fontSize": "27px",
+          "textAlign": "center",
+          "color": "#1B5E20"
+        },
+        "style": {
+          "padding": "50px 20px",
+          "backgroundColor": "rgba(255, 255, 255, 0.6)"
+        },
+        "position": {
+          "x": 110,
+          "y": 190,
+          "width": 580,
+          "height": 205
+        }
+      }
+    ]
+  },
+  {
+    "id": "template-9",
+    "name": "비치 웨딩",
+    "thumbnail": "/images/templates/beach.jpg",
+    "category": "beach",
+    "backgroundColor": "#B3E5FC",
+    "backgroundImage": null,
+    "components": [
+      {
+        "id": "comp-1",
+        "type": "text",
+        "order": 1,
+        "data": {
+          "title": "Beach Wedding",
+          "content": "바다를 배경으로 한 우리의 맹세",
+          "fontSize": "28px",
+          "textAlign": "center",
+          "color": "#01579B"
+        },
+        "style": {
+          "padding": "50px 20px",
+          "backgroundColor": "rgba(255, 255, 255, 0.8)"
+        },
+        "position": {
+          "x": 100,
+          "y": 210,
+          "width": 600,
+          "height": 210
+        }
+      }
+    ]
+  },
+  {
+    "id": "template-10",
+    "name": "럭셔리 웨딩",
+    "thumbnail": "/images/templates/luxury.jpg",
+    "category": "luxury",
+    "backgroundColor": "#1A1A1A",
+    "backgroundImage": null,
+    "components": [
+      {
+        "id": "comp-1",
+        "type": "text",
+        "order": 1,
+        "data": {
+          "title": "Luxury Wedding",
+          "content": "화려한 시작",
+          "fontSize": "34px",
+          "textAlign": "center",
+          "color": "#FFD700"
+        },
+        "style": {
+          "padding": "70px 30px",
+          "backgroundColor": "transparent"
+        },
+        "position": {
+          "x": 100,
+          "y": 250,
+          "width": 600,
+          "height": 260
+        }
+      }
+    ]
+  }
+]
